@@ -1,2 +1,25 @@
 IT497-Assignment-2
 ==================
+install.packages("Quandl")
+library(Quandl)
+mydata1 <- Quandl("WORLDBANK/ARG_IT_NET_USER_P2", trim_start="1990-12-31", trim_end="2013-12-31", authcode="mz6EXUC6aUzNTgo1txtm")
+head(mydata1,23)
+
+mydata2 <- Quandl("WORLDBANK/GBR_IT_NET_USER_P2", trim_start="1990-12-31", trim_end="2013-12-31", authcode="mz6EXUC6aUzNTgo1txtm")
+head(mydata2,23)
+
+mydata3 <- Quandl("WORLDBANK/USA_IT_NET_USER_P2", trim_start="1990-12-31", trim_end="2013-12-31", authcode="mz6EXUC6aUzNTgo1txtm")
+head(mydata3,23)
+mydata <- merge(x=mydata1, y=mydata2, by = c("Date"))
+head(mydata,23)
+mydata.final <- merge(x=mydata, y=mydata3, by = c("Date"))
+head(mydata.final,23)
+str(mydata.final)
+library(plyr)
+mydata.new <- rename(mydata.final, c("Value.x"="Value(ARG)", "Value.y"="Value(GRB)", "Value" = "Value(USA)"))
+str(mydata.new)
+head(mydata.new,23)
+write.csv(mydata.new,"Assignment2_data.csv")
+class(mydata.new)
+str(mydata.new)
+summary(mydata.new)
